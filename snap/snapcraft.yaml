@@ -1,0 +1,78 @@
+name: qt6-core24
+summary: Qt6 runtime content snap based on Ubuntu core24
+version: '6.4.2'
+description: |
+  This snap is to be consumed by various Qt applications which uses Qt 6. Precompiled Libraries and binaries are stages from Ubuntu's official repository.
+
+
+grade: stable
+confinement: strict
+compression: lzo
+base: core24
+
+
+platforms:
+  amd64:
+    build-on: [amd64]
+    build-for: [amd64]
+    
+slots: 
+  qt6-core24:
+    interface: content
+    read: 
+      - /
+
+parts:
+  qt6:
+    plugin: nil
+    stage-packages:
+      # Platform
+      #- adwaita-icon-theme
+      #- dmz-cursor-theme
+      - fontconfig
+      #- freeglut3 PKG-NIR
+      #- gnome-themes-standard
+      - libgdk-pixbuf2.0-0
+      - libglib2.0-0
+      - libglib2.0-bin
+      - libglu1-mesa
+      - libice6
+      - libxkbcommon0
+      #- light-themes
+      - locales-all
+      - shared-mime-info
+      - fonts-ubuntu
+      - xdg-user-dirs
+
+      # Other Desktop integration
+      - ibus-wayland
+      - libibus-1.0-5
+      - gsettings-desktop-schemas
+
+      # Qt desktop integration
+      - qdbus-qt6
+      - qt6-gtk-platformtheme
+      - qt6-xdgdesktopportal-platformtheme
+
+      # Qt modules from core22
+      - libqt6gui6t64
+      - libqt6svg6
+      - libqt6sql6-sqlite
+      - libqt6waylandclient6
+      - libqt6webenginewidgets6
+      #- libqt5x11extras5 qt6 alternative is n/a https://github.com/Zren/material-decoration/issues/60
+
+  cleanup:
+    after:
+      - qt6
+    plugin: nil
+    override-prime: |
+      set -eux
+      
+      for CRUFT in bug lintian man; do
+        rm -rf $CRAFT_PRIME/usr/share/$CRUFT
+      done
+      
+      find $CRAFT_PRIME/usr/share/doc/ -type f -not -name 'copyright' -delete
+      
+      find $CRAFT_PRIME/usr/share -type d -empty -delete
