@@ -28,7 +28,7 @@ parts:
     plugin: nil
     stage-packages:
       # Platform
-      - freeglut3
+      #- freeglut3 PKG_NIR
       - libgdk-pixbuf2.0-0
       - libice6
       - libxkbcommon0
