@@ -5,16 +5,17 @@ description: |
   This snap is to be consumed by various Qt applications which uses Qt 6. Precompiled Libraries and binaries are stages from Ubuntu's official repository.
 
 
+base: core24
 grade: stable
 confinement: strict
 compression: lzo
-base: core24
 
 
 platforms:
   amd64:
     build-on: [amd64]
     build-for: [amd64]
+
     
 slots: 
   qt6-core24:
@@ -27,19 +28,11 @@ parts:
     plugin: nil
     stage-packages:
       # Platform
-      #- adwaita-icon-theme
-      #- dmz-cursor-theme
-      - fontconfig
-      #- freeglut3 PKG-NIR
-      #- gnome-themes-standard
+      - freeglut3
       - libgdk-pixbuf2.0-0
-      - libglib2.0-0
-      - libglib2.0-bin
-      - libglu1-mesa
       - libice6
       - libxkbcommon0
-      #- light-themes
-      - locales-all
+
       - shared-mime-info
       - fonts-ubuntu
       - xdg-user-dirs
