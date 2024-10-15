@@ -76,14 +76,3 @@ parts:
       craftctl default
       cd $CRAFT_PRIME
       find . -type f,l -name "*.h" -exec rm -f {} \;
-
-  cleanup:
-    after: [qt6]
-    plugin: nil
-    override-prime: |
-      set -eux
-      for dir in bug lintian man; do
-        rm -rf $CRAFT_PRIME/usr/share/$dir
-      done
-      find $CRAFT_PRIME/usr/share/doc/ -type f ! -name 'copyright' -delete
-      find $CRAFT_PRIME/usr/share -type d -empty -delete
