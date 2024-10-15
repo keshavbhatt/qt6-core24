@@ -2,70 +2,88 @@ name: qt6-core24
 summary: Qt6 runtime content snap based on Ubuntu core24
 version: '6.4.2'
 description: |
-  This snap is to be consumed by various Qt applications which uses Qt 6. Precompiled Libraries and binaries are stages from Ubuntu's official repository.
-
+  This snap is to be consumed by various Qt applications using Qt 6. Precompiled libraries and binaries are staged from Ubuntu's official repository.
 
 base: core24
 grade: stable
 confinement: strict
 compression: lzo
 
-
 platforms:
   amd64:
     build-on: [amd64]
     build-for: [amd64]
 
-    
-slots: 
+slots:
   qt6-core24:
     interface: content
-    read: 
+    read:
       - /
 
 parts:
   qt6:
     plugin: nil
     stage-packages:
-      # Platform
-      #- freeglut3 PKG_NIR
+      # Platform dependencies
+      - freeglut3-dev
+      - libglib2.0-0
       - libgdk-pixbuf2.0-0
       - libice6
+      - libegl1
+      - libgl1-mesa-dri
+      - libglx-mesa0
       - libxkbcommon0
-
-      - shared-mime-info
-      - fonts-ubuntu
-      - xdg-user-dirs
-
-      # Other Desktop integration
-      - ibus-wayland
-      - libibus-1.0-5
-      - gsettings-desktop-schemas
+      - libpulse0
+      - locales
+      - libc-bin
+      - gettext
+      - libdrm-dev
+      - mesa-va-drivers
+      - on amd64:
+          - i965-va-driver
+          - intel-media-va-driver
 
       # Qt desktop integration
       - qdbus-qt6
       - qt6-gtk-platformtheme
       - qt6-xdgdesktopportal-platformtheme
 
-      # Qt modules from core22
+      # Qt modules from core24
       - libqt6gui6t64
       - libqt6svg6
       - libqt6sql6-sqlite
       - libqt6waylandclient6
       - libqt6webenginewidgets6
-      #- libqt5x11extras5 qt6 alternative is n/a https://github.com/Zren/material-decoration/issues/60
+
+    stage:
+      - -usr/lib/*/libdrm*
+      - -usr/share/doc/libdrm*
+      - -usr/lib/*/cmake
+      - -usr/lib/*/qt6/mkspecs
+      - -usr/share/qt6/doc
+      - -usr/share/ECM
+      - -lib/udev
+      - -usr/share/applications
+      - -usr/share/apport
+      - -usr/share/bug
+      - -usr/share/icons
+      - -usr/share/libwacom
+      - -usr/share/lintian
+      - -usr/share/pkgconfig
+
+    override-prime: |
+      set -eux
+      craftctl default
+      cd $CRAFT_PRIME
+      find . -type f,l -name "*.h" -exec rm -f {} \;
 
   cleanup:
-    after:
-      - qt6
+    after: [qt6]
     plugin: nil
     override-prime: |
       set -eux
-      
-      for CRUFT in bug lintian man; do
-        rm -rf $CRAFT_PRIME/usr/share/$CRUFT
+      for dir in bug lintian man; do
+        rm -rf $CRAFT_PRIME/usr/share/$dir
       done
-      
-      find $CRAFT_PRIME/usr/share/doc/ -type f -not -name 'copyright' -delete
-      
+      find $CRAFT_PRIME/usr/share/doc/ -type f ! -name 'copyright' -delete
       find $CRAFT_PRIME/usr/share -type d -empty -delete
