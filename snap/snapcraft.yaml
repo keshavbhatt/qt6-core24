@@ -35,6 +35,7 @@ parts:
       - libxkbcommon0
       - libpulse0
       - locales
+      - locales-all
       - libc-bin
       - gettext
       - libdrm-dev
