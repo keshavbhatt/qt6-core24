@@ -36,7 +36,6 @@ parts:
       - libpulse0
       - locales
       - locales-all
-      - libc-bin
       - gettext
       - libdrm-dev
       - mesa-va-drivers
@@ -55,6 +54,9 @@ parts:
       - libqt6sql6-sqlite
       - libqt6waylandclient6
       - libqt6webenginewidgets6
+
+      # other
+      - gsettings-desktop-schemas
 
     stage:
       - -usr/lib/*/libdrm*
