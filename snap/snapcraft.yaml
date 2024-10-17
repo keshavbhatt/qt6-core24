@@ -58,7 +58,7 @@ parts:
       # other
       - gsettings-desktop-schemas
 
-    stage:
+    prime:
       - -usr/lib/*/libdrm*
       - -usr/share/doc/libdrm*
       - -usr/lib/*/cmake
