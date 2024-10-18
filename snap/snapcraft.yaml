@@ -62,7 +62,6 @@ parts:
       - xkb-data # required for qt6-wayland
 
     prime:
-      - -usr/lib/*/libdrm*
       - -usr/share/doc/libdrm*
       - -usr/lib/*/cmake
       - -usr/lib/*/qt6/mkspecs
