@@ -58,6 +58,8 @@ parts:
 
       # other
       - gsettings-desktop-schemas
+      - xdg-user-dirs
+      - xkb-data # required for qt6-wayland
 
     prime:
       - -usr/lib/*/libdrm*
