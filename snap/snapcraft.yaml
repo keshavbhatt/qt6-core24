@@ -27,6 +27,7 @@ parts:
       # Platform dependencies
       - freeglut3-dev
       - libglib2.0-0
+      - libglib2.0-bin
       - libgdk-pixbuf2.0-0
       - libice6
       - libegl1
