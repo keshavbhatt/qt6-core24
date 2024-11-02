@@ -50,6 +50,7 @@ parts:
       - qdbus-qt6
       - qt6-gtk-platformtheme
       - qt6-xdgdesktopportal-platformtheme
+      - qgnomeplatform-qt6
 
       # Qt modules from core24
       - libqt6gui6t64
