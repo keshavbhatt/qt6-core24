@@ -638,13 +638,13 @@ export QTCHOOSER_NO_GLOBAL_DIR=1
 # qtchooser hardcodes reference paths, we'll need to rewrite them properly
 ensure_dir_exists "$XDG_CONFIG_HOME/qtchooser"
 echo "$SNAP_DESKTOP_RUNTIME/usr/lib/qt$QT_SELECT/bin"  > "$XDG_CONFIG_HOME/qtchooser/$QT_SELECT.conf"
-echo "$SNAP/usr/lib/qt$QT_SELECT/bin" > "$XDG_CONFIG_HOME/qtchooser/$QT_SELECT.conf"
+echo "$SNAP/usr/lib/qt$QT_SELECT/bin" >> "$XDG_CONFIG_HOME/qtchooser/$QT_SELECT.conf"
 echo "$SNAP/usr/lib/$ARCH" >> "$XDG_CONFIG_HOME/qtchooser/$QT_SELECT.conf"
 echo "$SNAP_DESKTOP_RUNTIME/usr/lib/$ARCH/qt$QT_SELECT/bin" >> "$XDG_CONFIG_HOME/qtchooser/$QT_SELECT.conf"
 echo "$SNAP_DESKTOP_RUNTIME/usr/lib/$ARCH/lib" >> "$XDG_CONFIG_HOME/qtchooser/$QT_SELECT.conf"
 
 echo "$SNAP_DESKTOP_RUNTIME/usr/lib/qt$QT_SELECT/bin"  > "$XDG_CONFIG_HOME/qtchooser/default.conf"
-echo "$SNAP/usr/lib/qt$QT_SELECT/bin" > "$XDG_CONFIG_HOME/qtchooser/default.conf"
+echo "$SNAP/usr/lib/qt$QT_SELECT/bin" >> "$XDG_CONFIG_HOME/qtchooser/default.conf"
 echo "$SNAP/usr/lib/$ARCH" >> "$XDG_CONFIG_HOME/qtchooser/default.conf"
 echo "$SNAP_DESKTOP_RUNTIME/usr/lib/$ARCH/qt$QT_SELECT/bin" >> "$XDG_CONFIG_HOME/qtchooser/default.conf"
 echo "$SNAP_DESKTOP_RUNTIME/usr/lib/$ARCH/lib" >> "$XDG_CONFIG_HOME/qtchooser/default.conf"
