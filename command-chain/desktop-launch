@@ -118,6 +118,26 @@ function append_dir() {
   fi
 }
 
+append_dir_and_subdirectory() {
+       local env_var_name=$1    # Environment variable name (e.g., LD_LIBRARY_PATH)
+    local base_dir=$2        # Base directory to search subdirectories (e.g., $SNAP_DESKTOP_RUNTIME/usr/lib/$ARCH)
+
+    # If the base directory doesn't exist, do nothing
+    [[ -d "$base_dir" ]] || return 0
+
+    # Find only the subdirectories (excluding the base directory itself)
+    local subdirs=$(find "$base_dir" -mindepth 1 -type d | tr '\n' ':' | sed 's/:$//')
+
+    # If subdirs are found, append them to the environment variable
+    if [[ -n "$subdirs" ]]; then
+        if [[ -n "${!env_var_name}" ]]; then
+            export "$env_var_name=${!env_var_name}:$subdirs"
+        else
+            export "$env_var_name=$subdirs"
+        fi
+    fi
+}
+
 function can_open_file() {
   [ -f "$1" ] && [ -r "$1" ]
 }
@@ -164,6 +184,9 @@ append_dir LD_LIBRARY_PATH "$SNAP_DESKTOP_RUNTIME/lib/$ARCH"
 append_dir LD_LIBRARY_PATH "$SNAP_DESKTOP_RUNTIME/usr/lib/$ARCH"
 append_dir LD_LIBRARY_PATH "$SNAP_DESKTOP_RUNTIME/usr/lib"
 append_dir LD_LIBRARY_PATH "$SNAP_DESKTOP_RUNTIME/lib"
+
+append_dir_and_subdirectory LD_LIBRARY_PATH "$SNAP_DESKTOP_RUNTIME/usr/lib/$ARCH"
+
 append_dir PATH "$SNAP_DESKTOP_RUNTIME/usr/bin"
 
 # XKB config
@@ -636,13 +659,13 @@ Data = $SNAP_DESKTOP_RUNTIME/usr/share/qt$QT_SELECT/
 Translations = $SNAP_DESKTOP_RUNTIME/usr/share/qt$QT_SELECT/translations
 EOF
 
-if [ -e "$SNAP_DESKTOP_RUNTIME/usr/share/i18n" ]; then
-    export I18NPATH="$SNAP_DESKTOP_RUNTIME/usr/share/i18n"
-    locpath="$XDG_DATA_HOME/locale"
-    ensure_dir_exists "$locpath"
-    export LOCPATH="$locpath:/usr/lib/locale"
-    LC_ALL=C.UTF-8 async_exec "$SNAP/snap/command-chain/locale-gen"
-fi
+# if [ -e "$SNAP_DESKTOP_RUNTIME/usr/share/i18n" ]; then
+#     export I18NPATH="$SNAP_DESKTOP_RUNTIME/usr/share/i18n"
+#     locpath="$XDG_DATA_HOME/locale"
+#     ensure_dir_exists "$locpath"
+#     export LOCPATH="$locpath:/usr/lib/locale"
+#     LC_ALL=C.UTF-8 async_exec "$SNAP/bin/locale-gen"
+# fi
 ###############################
 # Mark update and exec binary #
 ###############################
