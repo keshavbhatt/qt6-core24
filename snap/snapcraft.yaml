@@ -54,6 +54,7 @@ parts:
       # Qt modules from core24
       - libqt6gui6t64
       - libqt6svg6
+      - libqt6svgwidgets6
       - libqt6sql6-sqlite
       - libqt6waylandclient6
       - libqt6webenginewidgets6
