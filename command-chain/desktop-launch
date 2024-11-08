@@ -623,7 +623,11 @@ prepend_dir QML2_IMPORT_PATH "$SNAP_DESKTOP_RUNTIME/usr/lib/$ARCH/qt$QT_SELECT/q
 prepend_dir QML2_IMPORT_PATH "$SNAP_DESKTOP_RUNTIME/lib/$ARCH"
 
 # Fix locating the QtWebEngineProcess executable
-append_dir QTWEBENGINEPROCESS_PATH "$SNAP_DESKTOP_RUNTIME/usr/lib/$ARCH/qt$QT_SELECT/libexec/QtWebEngineProcess"
+if [ "$QT_SELECT" -eq 5 ]; then
+    append_dir QTWEBENGINEPROCESS_PATH "$SNAP_DESKTOP_RUNTIME/usr/lib/$ARCH/qt$QT_SELECT/libexec/QtWebEngineProcess"
+else
+    append_dir QTWEBENGINEPROCESS_PATH "$SNAP_DESKTOP_RUNTIME/usr/lib/qt$QT_SELECT/libexec/QtWebEngineProcess"
+fi
 
 # Removes Qt warning: Could not find a location
 # of the system Compose files
