@@ -46,7 +46,7 @@ parts:
           - intel-media-va-driver
 
       # Qt desktop integration
-      - qtchooser
+      #- qtchooser
       - qt6-wayland
       - qdbus-qt6
       - qt6-gtk-platformtheme
